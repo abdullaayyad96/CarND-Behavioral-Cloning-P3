@@ -1,6 +1,6 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
+## Project Writeup
 
 ### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
@@ -18,13 +18,9 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/data_samples.jpg "Sample Images"
+[image2]: ./figures/data_before_balancing.jpg "Data Bar Graph"
+[image3]: ./examples/data+after_bar.jpg "Balanced Data Bar Graph"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -32,13 +28,15 @@ The goals / steps of this project are the following:
 ---
 ### Files Submitted & Code Quality
 
-#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
+#### 1. Submission files
 
 My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* writeup.md summarizing the project
+* video.mp4 & video2.mp4 showing the performance of the trained model in two different tracks
+
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
@@ -48,25 +46,65 @@ python drive.py model.h5
 
 #### 3. Submission code is usable and readable
 
-The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The model.ipynb file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
 ### Model Architecture and Training Strategy
 
-#### 1. An appropriate model architecture has been employed
+#### 1. Final NN Model Architecture
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+A discreption of the Neural Network model I built can be seen below:
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         | 160*320*3 image   							| 
+| Normalization |   |
+| Cropping      |   |
+| Convolution   | 1x1 stride, same padding, filter size: 5x5, output channels: 6	|
+| Max pooling	  | 2x2 window, 2x2 stride  |
+| RELU					|												|
+| Convolution   | 1x1 stride, same padding, filter size: 5x5, output channels: 24	|
+| Max pooling	 	| 2x2 window, 2x2 stride  |
+| RELU					|					
+| Convolution  	| 1x1 stride, same padding, filter size: 5x5, output channels: 36	|
+| Max pooling	 	| 2x2 window, 2x2 stride  |
+| RELU					|					
+| Convolution  	| 1x1 stride, same padding, filter size: 5x5, output channels: 48	|
+| Max pooling	  | 2x2 window, 2x2 stride  |
+| RELU					|					
+| Convolution  	| 1x1 stride, same padding, filter size: 3x3, output channels: 64	|
+| Max pooling  	| 2x2 window, 2x2 stride  |
+| RELU					|		
+| Convolution  	| 1x1 stride, same padding, filter size: 3x3, output channels: 64	|
+| Max pooling 	| 2x2 window, 2x2 stride  |
+| RELU					|				
+| Flatten       | Flatten output of 5'th and 6'th Convolutional layers
+| Concatentate  | Concatenate flattened output of  5'th and 6'th Convolutional layers
+| Fully connected		|  outputs 1064    |
+| RELU      |          |
+| Dropout   |         |
+| Fully connected		|  outputs 100    |
+| RELU      |          |
+| Dropout   |         |
+| Fully connected		|  outputs 50    |
+| RELU      |          |
+| Dropout   |         |
+| Regressor	|  outputs: steering angle |
+
+As seen above, the model contains six convolutional layers followed by three fully connected layers and a regressor that outputs a predicted steering angle. The input of the first fully connected layer are flattened and concatenated versions of the output of the fifth and sixth convolutional layers, this allows the fully connected layers to use higher and lower level features fron the convolutional layers which was found to considerabley reduce the error when the modelwas being trained.
+
+'Relu' activation was also added in each layer in order introduce non-linearity in the system. 
+
+This model is almost identical to model developed and published by Nvidia which can be seen [here] (https://devblogs.nvidia.com/deep-learning-self-driving-cars/). The main differance is the model in this project conctenates flatenned versions of the fifth ans sixth convolutional layers as mentioned above.
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting. Additionally, the model was trained, validated and then tested on different data sets to ensure that the model was not overfitting. 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Finally, the model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually.
 
 #### 4. Appropriate training data
 
