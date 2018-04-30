@@ -18,9 +18,9 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/data_samples.jpg "Sample Images"
+[image1]: ./figures/data_samples.jpg "Sample Images"
 [image2]: ./figures/data_before_balancing.jpg "Data Bar Graph"
-[image3]: ./examples/data+after_bar.jpg "Balanced Data Bar Graph"
+[image3]: ./figures/data+after_bar.jpg "Balanced Data Bar Graph"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -96,6 +96,8 @@ As seen above, the model contains six convolutional layers followed by three ful
 
 This model is almost identical to model developed and published by Nvidia which can be seen [here] (https://devblogs.nvidia.com/deep-learning-self-driving-cars/). The main differance is the model in this project conctenates flatenned versions of the fifth ans sixth convolutional layers as mentioned above.
 
+Prior to passing images to the NN, images are first normalized using Keras lambda function and then cropped using Keras Cropping2D function. 
+
 #### 2. Attempts to reduce overfitting in the model
 
 The model contains dropout layers in order to reduce overfitting. Additionally, the model was trained, validated and then tested on different data sets to ensure that the model was not overfitting. 
@@ -108,9 +110,13 @@ The model used an adam optimizer, so the learning rate was not tuned manually.
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+The training data was obtained using the Udacity simulator in which I manually drove and recorded images and the correlating steering angles were recorderd. The data used was acquired from driving on two different tracks several time. The figure below shows some sample training images along with their recorded steering angles:
 
-For details about how I created the training data, see the next section. 
+![alt_text][image1]
+
+Although the simulator provides images from three different cameras, one in the center, one on the right and another on the left. When running the Udacity simulator on autonomous mode, only cameras from the center image are passed to the NN model, thus the model must be trained to accept only a single image.
+One possible solution was to utilize a constant correcting factor on the steering angles of images obtained from left/right cameras and pass them to the model as center images when training the NN. However, in my project, only data obtained from the center camera was utilized in training the model. That is because the driving behavior I followed when obtaining data was different for the two tracks since I tried to stick to one lane of a two lane road in the second track, while the first track consisted of a single wide lane in which I tried to keep in the middle. This meant that for the same displacement to the right or to the left, the car must perform differently to follow the desired behavior. This means that no single correction factor can be used to correct for right and left camera images from both tracks. Unfortunately, since I did not take this into account when collecting the training data, I did not implement any mechanisim to be able to seperate data from different tracks and assign a different correcting factor according to the track. In order to compensate for this shorcoming a huge data set was collected and only center images were utilized.  
+
 
 ### Model Architecture and Training Strategy
 
