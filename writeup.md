@@ -33,7 +33,7 @@ My project includes the following files:
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
 * writeup.md summarizing the project
-* video.mp4 & video2.mp4 showing the performance of the trained model in two different tracks
+* track1.mp4 & track2.mp4 showing the performance of the trained model in two different tracks
 
 
 #### 2. Submission includes functional code
@@ -98,7 +98,7 @@ Prior to passing images to the NN, images are first normalized using Keras lambd
 
 #### 2. Solution Design Approach
 
-Different models were tested and enhanced prior to reaching the final model architecture described above. Initially, a simple model with two convolutional layers and a signle fully connected layer was tested. While the model was able to successfully drive the car for a short time, it performed very poorly at certain turns where the lane lines are not very clear. And when trained using data from two different tracks, it almost instantly got out of lane. Thus the number of layers and the depth of layers were incrementally increased until finally this [model]((https://devblogs.nvidia.com/deep-learning-self-driving-cars/) from Nvidia was adopted. While a significant improvement was achieved, the model did not perform as good on the second track. By slightly changing the model so that the first fully connected layer uses the flattened output of the last two convolutional layers a long with some preprocessing of the training data *as describe in section.6 below), the error was considerably reduced and the model performed better on the second track.
+Different models were tested and enhanced prior to reaching the final model architecture described above. Initially, a simple model with two convolutional layers and a signle fully connected layer was tested. While the model was able to successfully drive the car for a short time, it performed very poorly at certain turns where the lane lines are not very clear. And when trained using data from two different tracks, it almost instantly got out of lane. Thus the number of layers and the depth of layers were incrementally increased until finally this [model](https://devblogs.nvidia.com/deep-learning-self-driving-cars/) from Nvidia was adopted. While a significant improvement was achieved, the model did not perform as good on the second track. By slightly changing the model so that the first fully connected layer uses the flattened output of the last two convolutional layers a long with some preprocessing of the training data *as describe in section.6 below), the error was considerably reduced and the model performed better on the second track.
 
 #### 3. Attempts to reduce overfitting in the model
 
