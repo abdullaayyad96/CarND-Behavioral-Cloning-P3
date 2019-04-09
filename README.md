@@ -4,7 +4,7 @@
 
 [image1]: ./report_figures/sample_run_Trim.gif "camera feedback"
 [image2]: ./report_figures/sample_run_3p_Trim.gif "Sample run"
-[image3]: ./report_figures/NN_architecture.emf "NN architecture"
+[image3]: ./report_figures/NN_architecture.jpg "NN architecture"
 
 Overview
 ---
