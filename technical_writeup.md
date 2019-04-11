@@ -2,9 +2,10 @@
 
 [//]: # (Image References)
 
-[image1]: ./report_figures/data_samples.jpg "Sample Images"
-[image2]: ./report_figures/data_before_balancing.jpg "Data Bar Graph"
-[image3]: ./report_figures/data_after_balancing.jpg "Balanced Data Bar Graph"
+[image1]: ./report_figures/NN_architecture.jpg "NN architecture"
+[image2]: ./report_figures/data_samples.jpg "Sample Images"
+[image3]: ./report_figures/data_before_balancing.jpg "Data Bar Graph"
+[image4]: ./report_figures/data_after_balancing.jpg "Balanced Data Bar Graph"
 
 
 ## Project Overciew
@@ -19,15 +20,17 @@ The goals / steps of this project are the following:
 The rubric points found [here](https://review.udacity.com/#!/rubrics/432/view) were considered throughout this project.
 
 
-### Model Architecture and Training Strategy
+## Model Architecture and Training Strategy
 
 #### 1. Final NN Model Architecture
 
 A deep learning model was implemented in keras for the purpose of this project. The implementation of the deep learning structure can be seen in this [jupyter notebook](/model.ipynb). A description of the Neural Network model I built can be seen below:
 
+![alt_text][image1]
+
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         | 160*320*3 image   							| 
+| Input         | 160 x 320 x 3 image   							| 
 | Normalization |   |
 | Cropping      |   |
 | Convolution   | 1x1 stride, same padding, filter size: 5x5, output channels: 6	|
@@ -87,7 +90,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually. A
 
 The training data was obtained using the Udacity simulation environment in which I manually drove while recorded and the corresponding steering angles were recorded. The data used was acquired from driving on two different tracks several time. The figure below shows some sample training images along with their recorded steering angles:
 
-![alt_text][image1]
+![alt_text][image2]
 
 Although the simulator provides images from three different cameras, one in the center, one on the right and another on the left. When running the Udacity simulator on autonomous mode, only cameras from the center image are passed to the NN model, thus the model must be trained to accept only a single image.
 
@@ -99,11 +102,11 @@ The data was loaded using a generator function in order to avoid overloading the
 
 After all the steps described above were performed, the model was tested on both tracks. While autonomous driving using the obtained model was capable of clearing the tracks at low speeds, it was apparent that the car sometimes took too long to start turning, causing the vehicle to get of the road at higher speeds. It was apparent that the vehicle tends to drive at small steering angles in general, this becomes understandable when looking more closely at the dataset used to train the model:
 
-![alt_text][image2]
+![alt_text][image3]
 
 As seen clearly in the previous bar plot, most of the data are for small steering angles. This might cause the model to tend to underestimate the actual required steering angle. In order to obtain a more balanced dataset, random data points from over-represented steering angle ranges were deleted from the data set while images were repeated for under-represented steering angles in order to obtain a more balanced representation of the full range of steering angles, the final data used for training the model is shown here:
 
-![alt_text][image3]
+![alt_text][image4]
 
 
 This have significantly improved the performance of the model in autonomous mode.
