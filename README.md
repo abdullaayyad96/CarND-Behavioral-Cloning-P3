@@ -21,12 +21,6 @@ The goals / steps of this project are the following:
 * Use the model to drive the vehicle autonomously around the first track in the simulator. The vehicle should remain on the road for an entire loop around the track.
 * Summarize the results with a written report
 
-
-Simulator
----
-
-[Udacity](www.udacity.com) provides a simulator as part of its [Self Driving Car NanoDegree Program](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) where a person can steer a car around a track for data collection. The simulator logs image data and steering angles which are used to train the neural network which is later used to drive the car autonomously around the track.
-
 Dependencies
 ---
 * Python3 
@@ -35,15 +29,23 @@ Dependencies
 * NumPy
 * OpenCV
 * Matplotlib
+* [Udacity Term 1 Self Driving Car Simulator](https://github.com/udacity/self-driving-car-sim)
 
 All the required packages can be found in Udacity's CarND Term1 conda environment. Click [here](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) for the details.
+
+Simulator
+---
+
+[Udacity](www.udacity.com) provides a simulator as part of its [Self Driving Car NanoDegree Program](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) where a person can steer a car around a track for data collection. The simulator logs image data and steering angles which are used to train the neural network. The simulator is also utilized to test the autonomous operation of the car autonomously the track.
+
+The simulator can be downloaded following the instructions [here](https://github.com/udacity/self-driving-car-sim). This project requries the term 1 simulator.
 
 
 ## Usage
 
 ### `drive.py`
 
-Usage of `drive.py` requires you have saved the trained model as an h5 file, i.e. `model.h5`. The jupyter notebook [model.ipynb](model.ipynb) contains the code for developing the NN model and generating the h5 file.
+Usage of `drive.py` requires having a trained and saved deep learning model as an h5 file, i.e. `model.h5`. A pretrained model is provided in this repository. Additionally, the jupyter notebook [model.ipynb](model.ipynb) contains the code for developing the deep learning model and generating the h5 file.
 
 Once the model has been saved, it can be used with drive.py using this command:
 
@@ -53,7 +55,7 @@ python drive.py model.h5
 
 The above command will load the trained model and use the model to make predictions on individual images in real-time and send the predicted angle back to the simulator via a websocket connection.
 
-Note: There is known local system's setting issue with replacing "," with "." when using drive.py. When this happens it can make predicted steering values clipped to max/min values. If this occurs, a known fix for this is to add "export LANG=en_US.utf8" to the bashrc file.
+Note: You need to launch the simulator manually and select autonomous mode in order for `drive.py` to establish a connection with the simulator.
 
 #### Saving a video of the autonomous agent
 
